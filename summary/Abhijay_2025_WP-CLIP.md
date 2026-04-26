@@ -1,8 +1,8 @@
-# WP-CLIP: Leveraging CLIP to Predict Wölfflin’s Principles in Visual Art — 論文要約
+# WP-CLIP: Leveraging CLIP to Predict Wölfflin’s Principles in Visual Art
 
-**著者**: Abhijay Ghildyal, Li-Yun Wang, Feng Liu
-**所属**: Portland State University
-**arXiv**: 2508.12668v1 (2025年8月18日)
+**著者**: Abhijay Ghildyal, Li-Yun Wang, Feng Liu  
+**所属**: Portland State University  
+**出版**: ICCV Workshop 2025  
 
 ---
 

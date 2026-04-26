@@ -1,8 +1,8 @@
-# VQArt-Bench: A semantically rich VQA Benchmark for Art and Cultural Heritage — 論文要約
+# VQArt-Bench: A semantically rich VQA Benchmark for Art and Cultural Heritage
 
 **著者**: Andrea Alfarano, Lorenzo Venturoli, Darío Negueruela del Castillo  
 **所属**: University of Zurich, Max Planck Society  
-**arXiv**: 2510.12750v1 (2025年10月14日)
+**出版**: ICCV Workshop 2025
 
 ---
 

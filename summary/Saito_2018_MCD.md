@@ -1,8 +1,8 @@
 # Maximum Classifier Discrepancy for Unsupervised Domain Adaptation
 
 **著者**: Kuniaki Saito, Kohei Watanabe, Yoshitaka Ushiku, Tatsuya Harada  
-**所属**: 東京大学・理化学研究所  
-**出版**: CVPR
+**所属**: University of Tokyo, RIKEN  
+**出版**: CVPR2018
 
 ---
 
@@ -88,14 +88,6 @@ $$R_T(h) \leq R_S(h) + \frac{1}{2} d_{\mathcal{H} \Delta \mathcal{H}}(\mathcal{S
 <p align="center"><img src="../image/Saito_2018_fig5.png" width="60%"></p>
 
 > **表1参照**：SVHN→MNIST 等のドメイン適応精度の比較．
-
-各シナリオでの主な結果：
-
-| シナリオ | 提案手法（$n=4$） | 次点の手法 |
-|---------|-----------------|-----------|
-| SVHN → MNIST | **96.2%** | DSN 82.7% |
-| SYN SIGNS → GTSRB | **94.4%** | DSN 93.1% |
-| MNIST → USPS | **94.2%** | CoGAN 91.2% |
 
 ラベル付きターゲットサンプルを検証に使う手法（†）と比較しても競争力があり，分布マッチングベースの手法を全設定で上回った．また，$n$ を増やすほど精度が向上する傾向が確認された（図5(a)(b)参照）．
 
