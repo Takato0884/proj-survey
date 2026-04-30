@@ -1,8 +1,8 @@
 # Learning Invariant Representations and Risks for Semi-supervised Domain Adaptation
 
-**著者**: Bo Li, Yezhen Wang, Shanghang Zhang, Dongsheng Li, Kurt Keutzer, Trevor Darrell, Han Zhao
-**所属**: UC Berkeley (BAIR), UC San Diego, Microsoft Research Asia, UIUC
-**出版**: arXiv (2010.04647v3) 2021
+**著者**: Bo Li, Yezhen Wang, Shanghang Zhang, Dongsheng Li, Kurt Keutzer, Trevor Darrell, Han Zhao.  
+**所属**: UC Berkeley (BAIR), UC San Diego, Microsoft Research Asia, UIUC.  
+**出版**: arXiv (2010.04647v3) 2021.  
 
 ---
 
@@ -27,15 +27,51 @@
 ## 2. トピックを探求するために使用された方法またはアプローチは何ですか？
 
 ### 2.1 理論的アプローチ:Semi-DA における汎化バウンドの導出
-
-著者は分類問題と回帰問題のそれぞれについて、ターゲット誤差 $\varepsilon_T(h)$ の有限サンプル上界を導出する(Theorem 4.1, 4.2)。バウンドは次の4つの構成要素から成る:
-
-- ソースとターゲットの**経験誤差**の凸結合(重みはサンプル数 $n, m$ の比)
-- 特徴空間における**周辺分布の距離** $d_{\mathcal{H}\Delta\mathcal{H}}(\widehat{\mathcal{D}}_S(Z), \widehat{\mathcal{D}}_T(Z))$
-- ソース・ターゲット**最適予測器の距離** $\min\{\mathbb{E}_S[|f_S - f_T|], \mathbb{E}_T[|f_S - f_T|]\}$
-- ノイズ項と有限サンプル収束項
-
-このバウンドは、Ben-David ら (2010) の古典的バウンドに含まれる扱いにくい合同最適誤差項 $\lambda$ を含まず、表現学習中も挙動が予測可能な形をしている点が新しい。
+ 
+#### 設定と記号
+ 
+ソースから $n$ 個のラベル付きサンプル $S = \{(x_i^{(S)}, y_i^{(S)})\}_{i=1}^n$、ターゲットから少量の $m$ 個のラベル付きサンプル $\tilde{T} = \{(x_j^{(\tilde{T})}, y_j^{(\tilde{T})})\}_{j=1}^m$($m \ll n$)が与えられる。  
+$g: \mathcal{X} \to \mathcal{Z}$ を特徴抽出器、$h: \mathcal{Z} \to \{0,1\}$ を仮説とし、各ドメインの最適予測器を条件付き平均関数 $f_S(Z) := \mathbb{E}_S[Y \mid Z]$、$f_{\tilde{T}}(Z) := \mathbb{E}_{\tilde{T}}[Y \mid Z]$ と定義する。  
+ノイズ量は $n_S := \mathbb{E}_S[|Y - f_S(Z)|]$、$n_{\tilde{T}} := \mathbb{E}_{\tilde{T}}[|Y - f_{\tilde{T}}(Z)|]$ で測る。
+ 
+#### Theorem 4.1(分類版)
+ 
+$\mathcal{H}$ を VC 次元 $d$ の仮説集合とすると、信頼度 $1 - \delta$ で次が成立する:
+ 
+$$
+\begin{aligned}
+\varepsilon_T(h) \leq\; & \underbrace{\frac{m}{n+m}\widehat{\varepsilon}_{\tilde{T}}(h) + \frac{n}{n+m}\widehat{\varepsilon}_S(h)}_{\text{(A) 経験誤差の凸結合}} \\
+& + \frac{n}{n+m}\Big\{\underbrace{d_{\mathcal{H}\Delta\mathcal{H}}(\widehat{\mathcal{D}}_S(Z), \widehat{\mathcal{D}}_T(Z))}_{\text{(B) 周辺分布距離}} + \underbrace{\min\{\mathbb{E}_S[|f_S - f_{\tilde{T}}|], \mathbb{E}_T[|f_S - f_{\tilde{T}}|]\}}_{\text{(C) 最適予測器距離}}\Big\} \\
+& + \underbrace{\frac{n}{n+m}|n_S + n_{\tilde{T}}|}_{\text{(D) ノイズ項}} + \underbrace{O\!\left(\sqrt{\left(\tfrac{1}{m} + \tfrac{1}{n}\right)\log\tfrac{1}{\delta} + \tfrac{d}{n}\log\tfrac{n}{d} + \tfrac{d}{m}\log\tfrac{m}{d}}\right)}_{\text{(E) 有限サンプル収束項}}
+\end{aligned}
+$$
+ 
+各項の意味は次の通り:
+ 
+- **(A)**: ソースとターゲットの経験誤差の凸結合。重みはサンプル数比 $\frac{n}{n+m}, \frac{m}{n+m}$ で決まり、ターゲットラベルが増える($m$ が増える)ほど $\widehat{\varepsilon}_{\tilde{T}}$ の寄与が大きくなる。
+- **(B)**: 特徴空間 $Z$ 上での周辺分布のずれを、対称差仮説クラス $\mathcal{H}\Delta\mathcal{H}$ に基づく擬距離 $d_{\mathcal{H}\Delta\mathcal{H}}$ で測る項。**不変表現学習** で最小化される。
+- **(C)**: ソースとターゲットの最適予測器 $f_S, f_{\tilde{T}}$ の差。**不変リスク学習** で最小化される。$\min$ で取っているのは、どちらのドメイン上で測ってもバウンドが成立するため、よりタイトな方を採用しているという意味である。
+- **(D)**: 各ドメインのノイズの和。アルゴリズムでは制御不可能な定数項。
+- **(E)**: 有限サンプル収束項。$n, m \to \infty$ で 0 に収束し、VC 次元 $d$ への依存性が現れる。
+#### Theorem 4.2(回帰版)
+ 
+回帰では $h: \mathcal{Z} \to [0, 1]$ とし、VC 次元の代わりに擬次元 $P\dim(\mathcal{H}) = d$ を用いる。また分布距離は次のクラスに基づく擬距離 $d_{\tilde{\mathcal{H}}}$ に置き換える:
+ 
+$$
+\tilde{\mathcal{H}} := \{\mathbb{I}_{|h(x) - h'(x)| > t} : h, h' \in \mathcal{H}, 0 \leq t \leq 1\}
+$$
+ 
+これは「2 つの回帰関数の差がしきい値 $t$ を超えるか」という指示関数の集合で、連続値関数の差を測るための工夫である。バウンドの構造は分類版と完全に並行する。
+ 
+#### 先行研究との比較
+ 
+Ben-David ら (2010) の古典的 UDA バウンドは
+ 
+$$
+\varepsilon_T(h) \leq \varepsilon_S(h) + d_{\mathcal{H}}(\mathcal{D}_S, \mathcal{D}_T) + \lambda, \qquad \lambda := \min_{h \in \mathcal{H}}\{\varepsilon_S(h) + \varepsilon_T(h)\}
+$$
+ 
+の形をとるが、合同最適誤差 $\lambda$ は仮説クラスや特徴空間に依存して**勝手に変動する**ため、表現学習を行うと制御不能な挙動を示す(Zhao ら 2019 が指摘)。本論文の Theorem 4.1, 4.2 は $\lambda$ を含まず、代わりに直接最適化可能な「最適予測器距離」(項 C)を与える点で、**アルゴリズム設計の指針として使える形**になっている。さらに、ターゲット経験誤差項(A の一部)、有限サンプル収束項(E)、ノイズ項(D)を明示的に取り込み、Semi-DA 設定の有限サンプル解析として完結している。
 
 ### 2.2 情報理論的解釈
 
