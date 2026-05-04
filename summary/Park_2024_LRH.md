@@ -1,14 +1,14 @@
 # The Linear Representation Hypothesis and the Geometry of Large Language Models
 
-**著者**: Kiho Park, Yo Joong Choe, Victor Veitch
-**所属**: University of Chicago
-**出版**: ICML (International Conference on Machine Learning) 2024
+**著者**: Kiho Park, Yo Joong Choe, Victor Veitch.  
+**所属**: University of Chicago.  
+**出版**: ICML (International Conference on Machine Learning) 2024.  
 
 ---
 
 ## 1. 論文の目的または目標は何ですか？
 
-<p align="center"><img src="../image/template.jpg" width="60%"></p>
+<p align="center"><img src="../image/Park_2024_fig1.png" width="60%"></p>
 
 「線形表現仮説(Linear Representation Hypothesis)」とは、言語モデルにおいて高次元の意味的コンセプト(言語が英語かフランス語か、性別が男性か女性か、など)が表現空間における**線形な方向**として符号化されている、という考え方である。この仮説が正しければ、モデルの解釈・制御を線形代数的な操作で行えるため極めて有用だが、これまで「線形表現」という言葉自体が曖昧に使われてきた。
 
@@ -52,6 +52,9 @@ $$\langle \bar{\gamma}, \bar{\gamma}' \rangle_C = \bar{\gamma}^\top \text{Cov}(\
 
 - **モデル**:LLaMA-2-7B(主)、Gemma-2B(比較)
 - **コンセプト**:全 27 種類(BATS 3.0 由来の文法・意味的コンセプト 22 種、言語ペア 4 種、頻度 1 種)。詳細は **Table 2** を参照
+
+<p align="center"><img src="../image/Park_2024_tab2.png" width="60%"></p>
+
 - **検証項目**:
   1. 反事実ペアの差が共通方向を向くか(Subspace 解釈)
   2. 推定した causal inner product のもとで因果分離可能なコンセプトが直交するか
@@ -66,6 +69,8 @@ $$\langle \bar{\gamma}, \bar{\gamma}' \rangle_C = \bar{\gamma}^\top \text{Cov}(\
 
 27 コンセプト中、`thing⇒part` を除く 26 コンセプトで、反事実ペアの差ベクトルがランダムペアと比べて顕著に大きな射影値を示した。これは線形表現仮説が広範に成り立つことを示している(**Figure 2** および付録の **Figure 7** を参照)。
 
+<p align="center"><img src="../image/Park_2024_fig2&3.png" width="60%"></p>
+
 **(2) Causal inner product は意味構造を捉える**
 
 推定した causal inner product のもとで、ほとんどの因果分離可能なコンセプトペアが近似的に直交する一方、意味的に関連するコンセプト群(動詞関連の 10 概念、言語ペア 4 概念など)はブロック対角構造を示した(**Figure 3** を参照)。例えば `lower⇒upper`(大文字化)は、英独仏西の言語ペアと非自明な内積を持ち、これは英独が独自の大文字化規則を持つ一方で仏西が類似していることと整合する。
@@ -74,17 +79,25 @@ $$\langle \bar{\gamma}, \bar{\gamma}' \rangle_C = \bar{\gamma}^\top \text{Cov}(\
 
 LLaMA-2 では Euclidean 内積も causal inner product と類似のパターンを示した(初期化や暗黙的正則化の効果と推測)。しかし Gemma-2B では Euclidean 内積は意味構造をほとんど捉えず、causal inner product のみが正しい構造を取り出した。これは causal inner product のモデル非依存性を示している(**Figure 8, Figure 9** を参照)。
 
+<p align="center"><img src="../image/Park_2024_fig8&9.png" width="60%"></p>
+
 **(4) Subspace 表現は線形プローブとして機能する**
 
 Wikipedia の仏語・西語コンテキストに対し、$\bar{\gamma}_{\text{French⇒Spanish}}$ で射影すると分布が明確に分離した。一方、無関係な $\bar{\gamma}_{\text{male⇒female}}$ では分離しなかった(**Figure 4** を参照)。
+
+<p align="center"><img src="../image/Park_2024_fig4.png" width="60%"></p>
 
 **(5) Subspace 表現から介入ベクトルを構成可能**
 
 $\bar{\lambda}_W = \text{Cov}(\gamma)^{-1}\bar{\gamma}_W$ をコンテキスト埋め込みに加算すると、ターゲットコンセプト W の確率のみが変化し、因果分離可能な他のコンセプトの確率は不変であった(**Figure 5** を参照)。例えば `male⇒female` 方向への介入は "queen" vs "king" の比を変えるが "King" vs "king"(大文字化)の比は変えない。
 
+<p align="center"><img src="../image/Park_2024_fig5.png" width="60%"></p>
+
 **(6) 介入により出力単語が劇的に変化する**
 
 コンテキスト "Long live the " に対し、$\alpha\bar{\lambda}_{\text{male⇒female}}$ を加算する強さ $\alpha$ を 0 から 0.4 まで増やすと、最尤の次単語が "king" から "queen" に変化した(**Table 1** を参照)。
+
+<p align="center"><img src="../image/Park_2024_tab1.png" width="60%"></p>
 
 ---
 
