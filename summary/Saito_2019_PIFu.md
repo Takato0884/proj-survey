@@ -1,8 +1,8 @@
 # PIFu: Pixel-Aligned Implicit Function for High-Resolution Clothed Human Digitization
 
-**著者**: Shunsuke Saito, Zeng Huang, Ryota Natsume, Shigeo Morishima, Angjoo Kanazawa, Hao Li
-**所属**: USC / USC ICT / Waseda University / UC Berkeley / Pinscreen
-**出版**: ICCV 2019
+**著者**: Shunsuke Saito, Zeng Huang, Ryota Natsume, Shigeo Morishima, Angjoo Kanazawa, Hao Li.  
+**所属**: USC / USC ICT / Waseda University / UC Berkeley / Pinscreen.  
+**出版**: ICCV 2019.  
 
 ---
 
