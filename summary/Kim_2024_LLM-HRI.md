@@ -176,7 +176,7 @@ LLM をロボットに統合した瞬間に、再現性・モデル名・プロ�
 LLM 一色の潮流に見えるが、HRI 本流はむしろ**実環境・長期・人間行動・相互作用理解**を依然として中核に据えている。
 
 - **HRI 2025**: 458 件のアブストラクト→ 400 件の完全投稿 → 100 件採択(採択率 25%)。Full Paper は **Theory and Methods / Design / Technical / Systems / User Studies** の 5 トラックに分かれ、貢献の種類を明示することを求める設計になっている。
-- **HRI 2025 Best Paper の 1 つ**は LLM 研究ではなく、Ramnauth, Shic, Scassellati (Yale) による *"Gaze Behavior During a Long-Term, In-Home, Social Robot Intervention for Children with ASD"* に贈られた。ASD 児の家庭内長期介入における視線パターン研究で、長期・実環境・人間行動という HRI 本流の価値観が依然として中核にあることを示している。
+- **HRI 2025 Best Paper の 1 つ**は LLM 研究ではなく、Ramnauth, Shic, Scassellati (Yale) による *"Gaze Behavior During a Long-Term, In-Home, Social Robot Intervention for Children with ASD"* に贈られた ([[Ramnauth_2025_GazeASD]])。ASD 児の家庭内長期介入における視線パターン研究で、長期・実環境・人間行動という HRI 本流の価値観が依然として中核にあることを示している。
 
 ### 本論文 (Kim et al. 2024) の現在的位置付け
 
